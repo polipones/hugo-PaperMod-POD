@@ -3,10 +3,10 @@
     {{- if .Site.Menus.footer }}
     <nav class="nav justify-content-center">
         {{- $currentPage := . }}
-        <ul id="footer-menu" onscroll="menu_on_scroll()" class="menu footer-menu">
+        <ul id="footer-menu" class="menu footer-menu">
             {{- range .Site.Menus.footer }}
             {{- $menu_item_url := (cond (strings.HasSuffix .URL "/") .URL (printf "%s/" .URL) ) | absLangURL }}
-            {{- $page_url:= $currentPage.Permalink  | absLangURL }}
+            {{- $page_url:= $currentPage.Permalink | absLangURL }}
             {{- $is_search := eq ($.Site.GetPage .KeyName).Layout `search` }}
             <li>
                 <a href="{{ .URL | absLangURL }}" title="{{ .Title | default .Name }} {{- cond $is_search (" (Alt + /)" | safeHTMLAttr) ("" | safeHTMLAttr ) }}"
@@ -16,7 +16,7 @@
                     </span>
                 </a>
             </li>
-            {{- end -}}
+            {{- end }}
         </ul>
     </nav>
     {{- end }}
@@ -45,11 +45,20 @@
 {{- partial "extend_footer.html" . }}
 
 <script>
-    let menu = document.getElementById('menu')
-    menu.scrollLeft = localStorage.getItem("menu-scroll-position");
-    menu.onscroll = function () {
-        localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+    function getSetMenuScroll(menu_id) {
+        let menu = document.getElementById(menu_id)
+        const menuLocalStorage = `menu-scroll-position-${menu_id}`
+        menu.scrollLeft = localStorage.getItem(menuLocalStorage);
+        menu.onscroll = function () {
+            localStorage.setItem(menuLocalStorage, menu.scrollLeft);
+        }
     }
+
+    getSetMenuScroll('menu')
+    if (document.getElementById('footer-menu')) {
+        getSetMenuScroll('footer-menu')
+    }
+    
 
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener("click", function (e) {
