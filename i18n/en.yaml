@@ -23,3 +23,6 @@
 
 - id: code_copied
   translation: "copied!"
+
+- id: edit_post
+  translation: "Suggest edit"
