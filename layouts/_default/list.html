@@ -33,6 +33,8 @@
 {{- partial "home_info.html" . }}
 {{- end }}
 
+<div class="post-list">
+
 {{- $term := .Data.Term }}
 {{- range $index, $page := $paginator.Pages }}
 
@@ -67,6 +69,8 @@
   <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
 </article>
 {{- end }}
+
+</div>{{/* end post-list */}}
 
 {{- if gt $paginator.TotalPages 1 }}
 <footer class="page-footer">

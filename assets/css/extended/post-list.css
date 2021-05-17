@@ -1,0 +1,17 @@
+.post-list {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.post-entry {
+    min-width: 100%;
+}
+
+@media screen and (min-width: 900px) {
+    .post-entry {
+        min-width: 49%;
+        max-width: 49%;
+    }
+}
