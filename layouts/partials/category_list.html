@@ -1,0 +1,14 @@
+{{- range $index, $page := $.paginator.Pages }}
+
+{{ if (eq $page.Layout "post-category") }}
+<article class="post-entry post-category">
+  <header class="entry-header">
+    <h2>
+      {{- .Title }}
+      {{- if .Draft }}<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>{{ end -}}
+    </h2>
+  </header>
+  <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+</article>
+{{- end }}
+{{ end }}

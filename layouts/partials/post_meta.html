@@ -1,6 +1,6 @@
 {{- $scratch := newScratch }}
 
-{{- if not .Date.IsZero -}}
+{{- if and (not .Date.IsZero) (not (.Param "HidePublishDate")) -}}
 {{- $scratch.Add "meta" (slice (.Date.Format (default "January 2, 2006" .Site.Params.DateFormat))) }}
 {{- end }}
 

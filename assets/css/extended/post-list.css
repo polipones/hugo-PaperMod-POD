@@ -15,3 +15,8 @@
         max-width: 49%;
     }
 }
+
+.post-entry.post-category {
+    background: var(--post-category-entry);
+    height: fit-content;
+}

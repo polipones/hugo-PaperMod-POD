@@ -34,9 +34,16 @@
 {{- end }}
 
 <div class="post-list">
+  {{- partial "category_list.html" (dict "cxt" . "paginator" $paginator) }}
+</div>
+
+<div class="post-list">
 
 {{- $term := .Data.Term }}
 {{- range $index, $page := $paginator.Pages }}
+
+{{/* Skip post-category layout pages */}}
+{{ if (ne $page.Layout "post-category") }}
 
 {{- $class := "post-entry" }}
 
@@ -70,6 +77,7 @@
 </article>
 {{- end }}
 
+{{ end }}{{/* end Skip post-category layout pages */}}
 </div>{{/* end post-list */}}
 
 {{- if gt $paginator.TotalPages 1 }}
