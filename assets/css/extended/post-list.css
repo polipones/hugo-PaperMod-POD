@@ -6,6 +6,7 @@
 }
 
 .post-entry {
+    display: flex;
     min-width: 100%;
 }
 
@@ -19,4 +20,16 @@
 .post-entry.post-category {
     background: var(--post-category-entry);
     height: fit-content;
+}
+
+.post-entry .text {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-entry figure {
+    max-width: 40%;
+    margin-bottom: 0;
+    margin-right: 5px;
+    align-self: center;
 }
