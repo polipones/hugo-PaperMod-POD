@@ -30,6 +30,53 @@
 .post-entry figure {
     max-width: 40%;
     margin-bottom: 0;
-    margin-right: 5px;
+    margin-right: var(--gap);
     align-self: center;
+}
+
+/* Latest posts on homepage */
+.post-list.post-list-latest {
+    flex-direction: column;
+}
+
+.post-list.post-list-latest .post-entry figure {
+    max-width: 30%;
+    min-width: 30%;
+}
+
+.post-list.post-list-latest .post-entry a {
+    box-shadow: initial;
+}
+
+@media screen and (min-width: 900px) {
+    .post-list.post-list-latest .post-entry {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .post-list.post-list-latest .post-entry.post-list-latest-more {
+        min-width: fit-content;
+        max-width: fit-content;
+        margin-left: auto;
+        padding: 15px;
+    }
+
+    .post-list.post-list-latest .entry-content {
+        -webkit-line-clamp: initial;
+    }
+}
+
+.post-list.post-list-latest .entry-content {
+    font-size: inherit;
+}
+
+.post-list.post-list-latest header h2 {
+    font-size: 24px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.post-list.post-list-latest .post-entry.post-list-latest-more span {
+    margin-left: auto;
+    margin-right: auto;
 }

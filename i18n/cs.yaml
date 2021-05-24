@@ -26,3 +26,6 @@
 
 - id: edit_post
   translation: "Navrhnout změnu"
+
+- id: all_posts
+  translation: "Všechny příspěvky"

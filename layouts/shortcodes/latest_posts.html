@@ -1,0 +1,35 @@
+<div class="post-list post-list-latest">
+    {{- $pages := (where $.Page.Site.Pages "Layout" "post") }}
+
+    {{- range $index, $page := first (.Get "count") $pages }}
+    
+    <article class="post-entry">
+      {{- $isHidden := (.Site.Params.cover.hidden | default .Site.Params.cover.hiddenInList) }}
+      {{- partial "cover.html" (dict "cxt" . "IsHome" true "isHidden" $isHidden) }}
+      <div class="text">
+        <header class="entry-header">
+          <h2>
+            {{- .Title }}
+            {{- if .Draft }}<div class="entry-isdraft"><sup>&nbsp;&nbsp;[draft]</sup></div>{{ end -}}
+          </h2>
+        </header>
+        {{- if (ne (.Param "hideSummary") true) }}
+        <section class="entry-content">
+          <p>{{ .Content | plainify | htmlUnescape | truncate 250 }}</p>
+        </section>
+        {{- end }}
+        {{- if not (.Param "hideMeta") }}
+        <footer class="entry-footer">
+          {{- partial "post_meta.html" . -}}
+        </footer>
+        {{- end }}
+      </div>
+      <a class="entry-link" aria-label="post link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
+    </article>
+    {{- end }}
+
+    <div class="post-entry post-list-latest-more">
+        <span>{{ i18n "all_posts" | default "All posts" }}</span>
+        <a class="entry-link" href="{{ "/posts" | absLangURL }}"></a>
+    </div>
+</div>{{/* end post-list */}}

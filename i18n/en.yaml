@@ -26,3 +26,6 @@
 
 - id: edit_post
   translation: "Suggest edit"
+
+- id: all_posts
+  translation: "All posts"
