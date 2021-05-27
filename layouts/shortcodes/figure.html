@@ -65,6 +65,9 @@ Changes:
         {{- end -}}
         {{- with .Get "width" }} width="{{ . }}"{{ end -}}
         {{- with .Get "height" }} height="{{ . }}"{{ end -}}
+        {{ if not (and (.Get "disable_lazy_loading") (eq (.Get "disable_lazy_loading") true)) }}
+            loading="lazy"
+        {{ end }}
     /> <!-- Closing img tag -->
     </a>
     {{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
