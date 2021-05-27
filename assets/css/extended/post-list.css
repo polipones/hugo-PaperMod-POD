@@ -17,6 +17,19 @@
     }
 }
 
+@media screen and (max-width: 768px) {
+    .post-list .post-entry {
+        flex-direction: column;
+    }
+
+    .post-list .post-entry figure {
+        min-width: 100%;
+        max-width: 100%;
+        margin-right: auto;
+        margin-bottom: var(--gap);
+    }
+}
+
 .post-entry.post-category {
     background: var(--post-category-entry);
     height: fit-content;
@@ -28,7 +41,8 @@
 }
 
 .post-entry figure {
-    max-width: 40%;
+    max-width: 30%;
+    min-width: 30%;
     margin-bottom: 0;
     margin-right: var(--gap);
     align-self: center;
@@ -42,11 +56,6 @@
 .post-list.post-list-latest .post-entry {
     min-width: 100%;
     max-width: 100%;
-}
-
-.post-list.post-list-latest .post-entry figure {
-    max-width: 30%;
-    min-width: 30%;
 }
 
 .post-list.post-list-latest .post-entry a {
