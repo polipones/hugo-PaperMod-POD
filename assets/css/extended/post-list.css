@@ -7,13 +7,13 @@
 
 .post-entry {
     display: flex;
-    min-width: 100%;
+    min-width: 49%;
+    max-width: 49%;
 }
 
-@media screen and (min-width: 900px) {
+@media screen and (max-width: 900px) {
     .post-entry {
-        min-width: 49%;
-        max-width: 49%;
+        min-width: 100%;
     }
 }
 
@@ -39,6 +39,11 @@
     flex-direction: column;
 }
 
+.post-list.post-list-latest .post-entry {
+    min-width: 100%;
+    max-width: 100%;
+}
+
 .post-list.post-list-latest .post-entry figure {
     max-width: 30%;
     min-width: 30%;
@@ -48,26 +53,16 @@
     box-shadow: initial;
 }
 
-@media screen and (min-width: 900px) {
-    .post-list.post-list-latest .post-entry {
-        min-width: 100%;
-        max-width: 100%;
-    }
-
-    .post-list.post-list-latest .post-entry.post-list-latest-more {
-        min-width: fit-content;
-        max-width: fit-content;
-        margin-left: auto;
-        padding: 15px;
-    }
-
-    .post-list.post-list-latest .entry-content {
-        -webkit-line-clamp: initial;
-    }
+.post-list.post-list-latest .post-entry.post-list-latest-more {
+    min-width: fit-content;
+    max-width: fit-content;
+    margin-left: auto;
+    padding: 15px;
 }
 
-.post-list.post-list-latest .entry-content {
-    font-size: inherit;
+.post-list.post-list-latest .post-entry.post-list-latest-more span {
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .post-list.post-list-latest header h2 {
@@ -76,7 +71,18 @@
     margin-bottom: 0;
 }
 
-.post-list.post-list-latest .post-entry.post-list-latest-more span {
-    margin-left: auto;
-    margin-right: auto;
+.post-list.post-list-latest .entry-content {
+    -webkit-line-clamp: initial;
+    font-size: inherit;
+}
+
+@media screen and (max-width: 768px) {
+    .post-list.post-list-latest .post-entry.post-list-latest-more {
+        min-width: 100%;
+        max-width: 100%;
+    }
+
+    .post-list.post-list-latest .entry-content {
+        -webkit-line-clamp: 2;
+    }
 }
