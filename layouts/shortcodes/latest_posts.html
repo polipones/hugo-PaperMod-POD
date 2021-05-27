@@ -15,7 +15,7 @@
         </header>
         {{- if (ne (.Param "hideSummary") true) }}
         <section class="entry-content">
-          <p>{{ .Content | plainify | htmlUnescape | truncate 250 }}</p>
+          <p>{{ .Content | plainify | htmlUnescape }}</p>
         </section>
         {{- end }}
         {{- if not (.Param "hideMeta") }}

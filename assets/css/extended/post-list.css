@@ -81,8 +81,14 @@
 }
 
 .post-list.post-list-latest .entry-content {
-    -webkit-line-clamp: initial;
     font-size: inherit;
+}
+
+.post-list.post-list-latest .entry-content p {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
 }
 
 @media screen and (max-width: 768px) {
@@ -91,10 +97,7 @@
         max-width: 100%;
     }
 
-    .post-list.post-list-latest .entry-content {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical; 
-        overflow: hidden;
+    .post-list.post-list-latest .entry-content p {
+        -webkit-line-clamp: 3;
     }
 }
