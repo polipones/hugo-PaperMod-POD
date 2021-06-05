@@ -29,3 +29,9 @@
 
 - id: all_posts
   translation: "Všechny příspěvky"
+
+- id: room
+  translation: "Pokoj"
+
+- id: phone
+  translation: "Telefon"

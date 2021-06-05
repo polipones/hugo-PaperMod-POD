@@ -29,3 +29,9 @@
 
 - id: all_posts
   translation: "All posts"
+
+- id: room
+  translation: "Room"
+
+- id: phone
+  translation: "Phone"

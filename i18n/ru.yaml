@@ -21,3 +21,15 @@
 
 - id: code_copied
   translation: "скопировано!"
+
+- id: edit_post
+  translation: "Предложите изменение"
+
+- id: all_posts
+  translation: "Все сообщения"
+
+- id: room
+  translation: "Комната"
+
+- id: phone
+  translation: "Phone"
