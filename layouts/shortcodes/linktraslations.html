@@ -5,6 +5,8 @@
 
     {{- range $index, $page := $.Page.Translations }}
 
+    {{ if not $page.Params.HideThisTranslation }}
+
     {{- $class := "post-entry translated-option" }}
 
     <article class="{{ $class }}">
@@ -23,5 +25,6 @@
     </header>
     <a class="entry-link" aria-label="page link to {{ .Title | plainify }}" href="{{ .Permalink }}"></a>
     </article>
+    {{ end }}
     {{- end }}
 {{- end }}

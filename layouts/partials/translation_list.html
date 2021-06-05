@@ -5,6 +5,7 @@
 <ul class="i18n_list">
     {{- i18n "translations" | default "Translations" }}:
     {{- range .Translations }}
+    {{ if (not (.Param "HideThisTranslation")) }}
     <li>
         <a href="{{ .Permalink }}">
             {{- if (and $.Site.Params.displayFullLangName (.Language.LanguageName)) }}
@@ -14,6 +15,7 @@
             {{- end -}}
         </a>
     </li>
+    {{ end }}
     {{- end }}
 </ul>
 {{- end -}}
