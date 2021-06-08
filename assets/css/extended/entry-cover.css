@@ -1,4 +1,4 @@
-.entry-cover {
+/* .entry-cover {
     min-width: 40%;
     max-width: 40%;
     margin-right: var(--gap);
@@ -13,5 +13,17 @@
         margin-right: 0;
         margin-top: 0;
         float: none;
+    }
+} */
+
+.entry-cover img {
+    max-height: 70vh;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media screen and (max-width: 768px) {
+    .entry-cover img {
+        max-height: unset;
     }
 }
