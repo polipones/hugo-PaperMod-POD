@@ -20,10 +20,14 @@
     max-height: 70vh;
     margin-right: auto;
     margin-left: auto;
+    width: auto;
+    max-width: 100%;
 }
 
 @media screen and (max-width: 768px) {
     .entry-cover img {
         max-height: unset;
+        width: auto;
+        max-width: 100%;
     }
 }
