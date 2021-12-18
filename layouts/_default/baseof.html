@@ -17,7 +17,10 @@
     <main class="main">
         {{- block "main" . }}{{ end }}
     </main>
-    {{ partialCached "footer.html" . .Layout .Kind .Permalink -}}
+
+    <!-- TODO - Old -->
+    <!-- {{ partialCached "footer.html" . .Layout .Kind .Permalink -}} -->
+    {{ partialCached "footer.html" . .Layout .Kind (.Param "hideFooter") (.Param "ShowCodeCopyButtons") -}}
 </body>
 
 </html>
