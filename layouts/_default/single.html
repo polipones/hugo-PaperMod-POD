@@ -36,11 +36,9 @@
     {{- partial "anchored_headings.html" .Content -}}
     {{- else }}{{ .Content }}{{ end }}
   </div>
-  <!-- TODO - Old -->
-  <!-- {{- if or (or .Params.tags (.Param "ShowPostNavLinks")) (and .Site.Params.ShowShareButtons (ne .Params.disableShare true) ) }} -->
-  <!-- Remove this end for old version -->
   {{- end }}
 
+  {{- if or (or .Params.tags (.Param "ShowPostNavLinks")) (and .Site.Params.ShowShareButtons (ne .Params.disableShare true) ) }}
   <footer class="post-footer">
     {{- if .Params.tags }}
     <ul class="post-tags">

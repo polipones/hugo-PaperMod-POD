@@ -95,7 +95,6 @@
     border-radius: var(--radius);
     pointer-events: none;
     width: 100%;
-    height: auto;
 }
 
 .entry-cover a {
