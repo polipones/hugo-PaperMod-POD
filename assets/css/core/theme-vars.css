@@ -6,6 +6,7 @@
     --header-height: 60px;
     --footer-height: 60px;
     --radius: 8px;
+    --post-category-entry: rgba(226, 226, 226, 1);
 
     /* TODO - Old */
     /* Custom */
@@ -54,6 +55,7 @@
     --hljs-bg: rgb(46, 46, 51);
     --code-bg: rgb(55, 56, 62);
     --border: rgb(51, 51, 51);
+    --post-category-entry: rgba(66, 66, 66, 1);
 }
 
 .list {
