@@ -44,13 +44,13 @@ Changes:
             {{/* only srcset images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}  
             srcset='
             {{ range $sizes }}
-                   {{ if ge $src.Width . }}{{ ($src.Resize (printf "%sx q50" .)).Permalink }} {{ (printf "%sw" .) }},{{ end }}
+                   {{ if ge $src.Width . }}{{ ($src.Resize (printf "%sx q75" .)).Permalink }} {{ (printf "%sw" .) }},{{ end }}
             {{ end }}'
 
             {{/* when no support for srcset (old browsers, RSS), we load small (800px) */}}
             {{/* if image smaller than 800, then load the image itself */}}
             {{ if ge $src.Width "800" }}
-                src="{{ ($src.Resize "800x q50").Permalink }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
+                src="{{ ($src.Resize "800x q75").Permalink }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
             {{ else }}
                 src="{{ $src.Permalink }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
             {{ end }}
