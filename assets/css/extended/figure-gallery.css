@@ -1,0 +1,19 @@
+.figure-gallery {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 5px;
+    margin: 10px 0;
+}
+
+.figure-gallery figure {
+    max-width: calc(100% * (1/2) - 5px);
+    min-width: calc(100% * (1/2) - 5px);
+    margin-bottom: 0;
+}
+
+.figure-gallery img {
+    margin-top: 0;
+    margin-bottom: 0;
+}
