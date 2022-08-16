@@ -1,29 +1,32 @@
 {{/*
+- Change viewport sizes, lazy-loading,async & width,alt,link,caption in the shortcode call
+- Hardcode sizes in this file
+- If an image should not be resized or changed - e.g. because it is low quality -
+    simply dont put it in the page bundle but in /static
 
-figure with auto-resizing and srcset v2020-05-10
+Example call: {{<figure src="image.jpg" alt="Alt Text" viewport="(max-width:720px) 80vw, (max-width: 1260px) 40vw, 30vw">}}
 
-Drop-in replacement for Hugo's figure shortcode as of 2020-05-02 that uses img srcset
+figure with auto-resizing, webp-conversion and srcset v2021-06-27
+
+Drop-in replacement for Hugo's figure shortcode as of 2020-05-02 that uses
+the picture tag, img srcset and webp format
 to enable browsers to download only the resolution that they need.
 
-The resizing and srcset magic only works for images that are part of the page
+The resizing and srcset magic only works for images that are pa rt of the page
 bundle. It will fall back to stock Hugo figure behaviour otherwise.
 
-Improvements that were initially out of reach of my Hugo template programming "skills"
-but have now been taken care of:
-- [x] gracefully handle images that are not in page bundle, i.e. no image processing available
-- [x] use a single configurable sizes array, and derive everything from there
-
-See https://cpbotha.net/2020/05/02/drop-in-replacement-for-hugo-figure-shortcode-with-img-srcset-support/
+Changes by @georgeblck:
+- 2021-06-27 Added picture-tag and optional lazy loading, async and viewport changing
+- 2021-06-05 Added webp (only works when hugo version >= 0.83.0) and lazy loading
+Changes and initial release by @cpbotha:
+- 2020-05-10 fall back to stock Hugo behaviour when no page bundle found
+- 2020-05-04 no unnecessary resizes, sizes in array
+- 2020-05-02 initial release
 
 - original srcset img shortcode from: https://laurakalbag.com/processing-responsive-images-with-hugo/
 - original hugo figure shortcode from: https://github.com/gohugoio/hugo/blob/master/tpl/tplimpl/embedded/templates/shortcodes/figure.html
 - no unnecessary resizes and more nudges by Stéfan van der Walt https://mentat.za.net/
 - mashing together and srcset logic fixes by Charl P. Botha https://cpbotha.net/
-
-Changes:
-- 2020-05-10 fall back to stock Hugo behaviour when no page bundle found
-- 2020-05-04 no unnecessary resizes, sizes in array
-- 2020-05-02 initial release
 
 */}}
 
@@ -33,56 +36,53 @@ Changes:
 {{/* get file that matches the filename as specified as src="" in shortcode */}}
 {{ $src := .Page.Resources.GetMatch (printf "*%s*" (.Get "src")) }}
 
-<figure{{ if or (.Get "class") (eq (.Get "align") "center") }} class="
-            {{- if eq (.Get "align") "center" }}align-center {{ end }}
-            {{- with .Get "class" }}{{ . }}{{- end }}"
-{{- end -}}>
+<figure{{ with .Get "class" }} class="{{ . }}" {{ end }}>
+    {{- if .Get "link" -}}
+    <a href="{{ .Get "link" }}" {{ with .Get "target" }} target="{{ . }}" {{ end }}{{ with .Get "rel" }} rel="{{ . }}" {{ end }}>
+    {{- else -}}
     <a href="{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
-    <img
-        {{ if $src }}
-            sizes="(min-width: 35em) 1200px, 100vw"
-            {{/* only srcset images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}}  
-            srcset='
-            {{ range $sizes }}
-                   {{ if ge $src.Width . }}{{ ($src.Resize (printf "%sx q75" .)).Permalink }} {{ (printf "%sw" .) }},{{ end }}
-            {{ end }}'
-
-            {{/* when no support for srcset (old browsers, RSS), we load small (800px) */}}
-            {{/* if image smaller than 800, then load the image itself */}}
-            {{ if ge $src.Width "800" }}
-                src="{{ ($src.Resize "800x q75").Permalink }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
-            {{ else }}
-                src="{{ $src.Permalink }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
-            {{ end }}
-
-        {{ else }}
-            {{/* fall back to stock hugo behaviour when image is not available in bundle */}}
-            src="{{ .Get "src" }}{{- if eq (.Get "align") "center" }}#center{{- end }}"
-        {{ end }}
-
-        {{- if or (.Get "alt") (.Get "caption") }}
-            alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}"
-        {{- end -}}
-        {{- with .Get "width" }} width="{{ . }}"{{ end -}}
-        {{- with .Get "height" }} height="{{ . }}"{{ end -}}
-        {{ if not (and (.Get "disable_lazy_loading") (eq (.Get "disable_lazy_loading") true)) }}
-            loading="lazy"
-        {{ end }}
-    /> <!-- Closing img tag -->
-    </a>
-    {{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
-        <figcaption>
-            {{ with (.Get "title") -}}
-                <h4>{{ . }}</h4>
-            {{- end -}}
-            {{- if or (.Get "caption") (.Get "attr") -}}<p>
-                {{- .Get "caption" | markdownify -}}
-                {{- with .Get "attrlink" }}
-                    <a href="{{ . }}">
-                {{- end -}}
-                {{- .Get "attr" | markdownify -}}
-                {{- if .Get "attrlink" }}</a>{{ end }}</p>
-            {{- end }}
-        </figcaption>
     {{- end }}
+    {{ if $src }}
+    <picture>
+        <source {{ if (isset .Params "viewport") }} {{- with .Get "viewport" }} sizes="{{ . }}" {{ end -}} {{ else }} sizes="(min-width: 35em) 1200px, 100vw" {{ end }} srcset='
+        {{ range $sizes }}
+        {{ if ge $src.Width . }}{{ ($src.Resize (printf "%sx webp" .)).Permalink }} {{ (printf "%sw" .) }},{{ end }}
+        {{ end }}' type="image/webp">
+        <source {{ if (isset .Params "viewport") }} {{- with .Get "viewport" }} sizes="{{ . }}" {{ end -}} {{ else }} sizes="(min-width: 35em) 1200px, 100vw" {{ end }} srcset='
+        {{ range $sizes }}
+        {{ if ge $src.Width . }}{{ ($src.Resize (printf "%sx jpg" .)).Permalink }} {{ (printf "%sw" .) }},{{ end }}
+        {{ end }}' type="image/jpeg">
+        {{ end }}
+        <img {{ if $src }} {{ if (isset .Params "viewport") }} {{- with .Get "viewport" }} sizes="{{ . }}" {{ end -}} {{ else }} sizes="(min-width: 35em) 1200px, 100vw" {{ end }}
+        {{/* only srcset images smaller than or equal to the src (original) image size, as Hugo will upscale small images */}} srcset='
+            {{ range $sizes }}
+                    {{ if ge $src.Width . }}{{ ($src.Resize (printf "%sx webp" .)).Permalink }} {{ (printf "%sw" .) }},{{ end }}
+            {{ end }}' {{/* when no support for srcset (old browsers, RSS), we load small (800px) */}} {{/* if image smaller than 800, then load the image itself as jpg */}} {{ if ge $src.Width "800" }}
+        src="{{ ($src.Resize "800x webp").Permalink }}" {{ else }}src="{{ ($src.Resize "jpg").Permalink }}" {{ end }} {{ else }} {{/* fall back to stock hugo behaviour when image is not available in bundle */}} src="{{ .Get "src" }}" {{ end }}
+        {{ if (isset .Params "loading") }} {{- with .Get "loading" }} loading="{{ . }}" {{ end -}} {{ else }} loading="lazy"
+        {{ end }} {{- if or (.Get "alt") (.Get "caption") }} alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}" {{- end -}} {{- with .Get "width" }} width="{{ . }}" {{ end -}} {{- with .Get "height" }}
+        height="{{ . }}" {{ end -}}
+        /> <!-- Closing img tag -->
+        {{ if $src }}
+    </picture> <!-- Closing picture tag -->
+{{ end }}
+{{/*  {{- if .Get "link" }}  */}}
+</a>
+{{/*  {{ end -}}  */}}
+{{- if or (or (.Get "title") (.Get "caption")) (.Get "attr") -}}
+<figcaption>
+{{ with (.Get "title") -}}
+<h4>{{ . }}</h4>
+{{- end -}}
+{{- if or (.Get "caption") (.Get "attr") -}}
+<p>
+    {{- .Get "caption" | markdownify -}}
+    {{- with .Get "attrlink" }}
+    <a href="{{ . }}">
+    {{- end -}}
+    {{- .Get "attr" | markdownify -}}
+    {{- if .Get "attrlink" }}</a>{{ end }}</p>
+{{- end }}
+</figcaption>
+{{- end }}
 </figure>
