@@ -1,0 +1,11 @@
+.contrast-border-1 {
+    border: 1px solid var(--secondary);
+}
+
+.contrast-border-3 {
+    border: 3px solid var(--secondary);
+}
+
+.contrast-border-5 {
+    border: 5px solid var(--secondary);
+}

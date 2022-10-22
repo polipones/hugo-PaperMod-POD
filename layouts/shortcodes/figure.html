@@ -58,10 +58,11 @@ Changes and initial release by @cpbotha:
             {{ range $sizes }}
                     {{ if ge $src.Width . }}{{ ($src.Resize (printf "%sx webp" .)).Permalink }} {{ (printf "%sw" .) }},{{ end }}
             {{ end }}' {{/* when no support for srcset (old browsers, RSS), we load small (800px) */}} {{/* if image smaller than 800, then load the image itself as jpg */}} {{ if ge $src.Width "800" }}
-        src="{{ ($src.Resize "800x webp").Permalink }}" {{ else }}src="{{ ($src.Resize "jpg").Permalink }}" {{ end }} {{ else }} {{/* fall back to stock hugo behaviour when image is not available in bundle */}} src="{{ .Get "src" }}" {{ end }}
+        src="{{ ($src.Resize "800x webp").Permalink }}" {{ else }}src="{{ ($src.Resize "800x jpg").Permalink }}" {{ end }} {{ else }} {{/* fall back to stock hugo behaviour when image is not available in bundle */}} src="{{ .Get "src" }}" {{ end }}
         {{ if (isset .Params "loading") }} {{- with .Get "loading" }} loading="{{ . }}" {{ end -}} {{ else }} loading="lazy"
         {{ end }} {{- if or (.Get "alt") (.Get "caption") }} alt="{{ with .Get "alt" }}{{ . }}{{ else }}{{ .Get "caption" | markdownify| plainify }}{{ end }}" {{- end -}} {{- with .Get "width" }} width="{{ . }}" {{ end -}} {{- with .Get "height" }}
         height="{{ . }}" {{ end -}}
+        {{ with .Get "img-class" }} class="{{ . }}" {{ end }}
         /> <!-- Closing img tag -->
         {{ if $src }}
     </picture> <!-- Closing picture tag -->
