@@ -5,7 +5,7 @@
     {{- if .Get "link" -}}
         <a href="{{ .Get "link" }}" {{ with .Get "target" }} target="{{ . }}" {{ end }}{{ with .Get "rel" }} rel="{{ . }}" {{ end }}>
     {{- else -}}
-        <a href="{{ $imageproxy }}/insecure/original/plain/local://{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
+        <a href="{{ $imageproxy }}/insecure/t_2000/plain/local://{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
     {{- end }}
 
     <img
