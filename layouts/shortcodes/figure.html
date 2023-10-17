@@ -13,7 +13,7 @@
 
         srcset="
         {{ range $sizes }}
-            {{ $imageproxy }}/insecure/{{ (printf "t_%s" .) }}/plain/local://{{ $.Get "src" }} {{ (printf "%sw" .) }},
+            {{ $imageproxy }}/insecure/{{ (printf "t_%s" .) }}{{ with $.Get "imgop" }}:{{ . }}{{ else }}:rt_fill{{ end }}/plain/local://{{ $.Get "src" }} {{ (printf "%sw" .) }},
         {{ end }}
         "
         

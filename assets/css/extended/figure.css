@@ -1,7 +1,7 @@
 figure img {
     max-height: 70vh;
-    margin-right: auto;
     margin-left: auto;
+    width: 100%
 }
 
 @media screen and (max-width: 768px) {
