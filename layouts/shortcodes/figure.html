@@ -1,11 +1,10 @@
 {{ $sizes := (slice "250" "480" "800" "1200" "1500") }}
-{{ $imageproxy := "http://localhost:8080" }}
 
 <figure{{ with .Get "class" }} class="{{ . }}" {{ end }}>
     {{- if .Get "link" -}}
         <a href="{{ .Get "link" }}" {{ with .Get "target" }} target="{{ . }}" {{ end }}{{ with .Get "rel" }} rel="{{ . }}" {{ end }}>
     {{- else -}}
-        <a href="{{ $imageproxy }}/insecure/t_2000/plain/local://{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
+        <a href="{{ $.Site.Params.imgproxyUrl }}/insecure/t_2000/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
     {{- end }}
 
     <img
@@ -13,12 +12,12 @@
 
         srcset="
         {{ range $sizes }}
-            {{ $imageproxy }}/insecure/{{ (printf "t_%s" .) }}{{ with $.Get "imgop" }}:{{ . }}{{ else }}:rt_fill{{ end }}/plain/local://{{ $.Get "src" }} {{ (printf "%sw" .) }},
+            {{ $.Site.Params.imgproxyUrl }}/insecure/{{ (printf "t_%s" .) }}{{ with $.Get "imgop" }}:{{ . }}{{ else }}:rt_fill{{ end }}/plain/{{ $.Site.Params.imgHostUrl }}/{{ $.Get "src" }} {{ (printf "%sw" .) }},
         {{ end }}
         "
         
         {{/* when no support for srcset (old browsers, RSS), we load average thumbnail */}}
-        src="{{ $imageproxy }}/insecure/t_800/plain/local://{{ .Get "src" }}"
+        src="{{ $.Site.Params.imgproxyUrl }}/insecure/t_800/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}"
 
         {{ if (isset .Params "loading") }}
             {{- with .Get "loading" }}
