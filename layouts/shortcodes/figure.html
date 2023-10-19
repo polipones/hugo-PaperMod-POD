@@ -4,7 +4,7 @@
     {{- if .Get "link" -}}
         <a href="{{ .Get "link" }}" {{ with .Get "target" }} target="{{ . }}" {{ end }}{{ with .Get "rel" }} rel="{{ . }}" {{ end }}>
     {{- else -}}
-        <a href="{{ $.Site.Params.imgproxyUrl }}/insecure/t_2000/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
+        <a href="{{ $.Site.Params.imgproxyUrl }}/insecure/t_2000:rt_fit/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
     {{- end }}
 
     <img
@@ -17,7 +17,7 @@
         "
         
         {{/* when no support for srcset (old browsers, RSS), we load average thumbnail */}}
-        src="{{ $.Site.Params.imgproxyUrl }}/insecure/t_800/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}"
+        src="{{ $.Site.Params.imgproxyUrl }}/insecure/t_800:rt_fill/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}"
 
         {{ if (isset .Params "loading") }}
             {{- with .Get "loading" }}
