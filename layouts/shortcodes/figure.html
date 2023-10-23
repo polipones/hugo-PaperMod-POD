@@ -4,7 +4,7 @@
     {{- if .Get "link" -}}
         <a href="{{ .Get "link" }}" {{ with .Get "target" }} target="{{ . }}" {{ end }}{{ with .Get "rel" }} rel="{{ . }}" {{ end }}>
     {{- else -}}
-        <a href="{{ $.Site.Params.imgproxyUrl }}/insecure/t_2000:rt_fit/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
+        <a href="{{ $.Site.Params.imgproxyUrl }}/insecure/raw/plain/{{ $.Site.Params.imgHostUrl }}/{{ .Get "src" }}" target="_blank"{{ with .Get "rel" }} rel="{{ . }}"{{ end }}>
     {{- end }}
 
     <img
