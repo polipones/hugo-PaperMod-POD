@@ -2,7 +2,8 @@
 {{- if (and .Params.cover.image (not $.isHidden)) }}
 {{- $alt := (.Params.cover.alt | default .Params.cover.caption | plainify) }}
 <figure class="entry-cover">
-    {{- $addLink := (and .Site.Params.cover.linkFullImages (not $.IsHome)) }}
+    {{- $responsiveImages := (.Params.cover.responsiveImages | default site.Params.cover.responsiveImages) | default true }}
+    {{- $addLink := (and site.Params.cover.linkFullImages (not $.IsHome)) }}
     {{- $cover := (.Resources.ByType "image").GetMatch (printf "*%s*" (.Params.cover.image)) }}
     {{- if $cover -}}{{/* i.e it is present in page bundle */}}
         {{- if $addLink }}<a href="{{ (path.Join .RelPermalink .Params.cover.image) | absURL }}" target="_blank"
@@ -12,8 +13,8 @@
         {{- if hugo.IsExtended -}}
             {{- $processableFormats = $processableFormats | append "webp" -}}
         {{- end -}}
-        {{- $prod := (hugo.IsProduction | or (eq .Site.Params.env "production")) }}
-        {{- if (and (in $processableFormats $cover.MediaType.SubType) (ne .Site.Params.cover.responsiveImages false) (eq $prod true)) }}
+        {{- $prod := (hugo.IsProduction | or (eq site.Params.env "production")) }}
+        {{- if (and (in $processableFormats $cover.MediaType.SubType) ($responsiveImages) (eq $prod true)) }}
         <img loading="lazy" srcset="{{- range $size := $sizes -}}
                         {{- if (ge $cover.Width $size) -}}
                         {{ printf "%s %s" (($cover.Resize (printf "%sx" $size)).Permalink) (printf "%sw ," $size) -}}
